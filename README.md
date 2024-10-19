@@ -1,65 +1,64 @@
 
-# Dynamic AI: Fractal Universe Chocolate Wafer Model (FUCWM) 
+# Dynamic AI: Fractal Universe Chocolate Wafer Model (FUCWM)
 
 ### Watch Demo
 
 Check out the demo of the project on YouTube: [Watch Here](https://www.youtube.com/live/d__ras4nLU4)
 
-While you are at it. Go to Huggingface and grab yourself a model: 
+While you're at it, head over to Hugging Face and grab yourself a model:
 
-[Hugging Face Repository: DaFuc](https://huggingface.co/spaces/Aluode/DaFuc/tree/main)
+**[Hugging Face Repository: DaFuc](https://huggingface.co/spaces/Aluode/DaFuc/tree/main)**
 
-There are two versions of "Blue" (Note, they are just blue and blue3. No end of file name, put them in the folder 
-where the app is and load them in the state save  / load) Blue likes to talk of color blue a lot. Well, I started calling it blue. It is very wave 
-oriented. Perhaps it was talking initially something about fractals with LM Studio, then I jumped in: 
+There are two versions of "Blue" (blue and blue3). Place them in the folder where the app is located and load them using the state save/load feature. Blue likes to talk about the color blue a lot. I started calling it Blue because it often speaks in wave-like terms. Perhaps it was talking about fractals with LM Studio, and then I joined in:
 
-[Watch the YouTube Video](https://www.youtube.com/live/d__ras4nLU4)
+**[Watch the YouTube Video](https://www.youtube.com/live/d__ras4nLU4)**
 
-It could be that I am seeing something in it that ain't there. But there is something organic about it. For some reason 
-when I began talking Finnish, it did not stick to its vocabulary. 
+It might be that I'm seeing something that isn't there, but there's something organic about it. For some reason, when I began talking Finnish, it didn't stick to its vocabulary.
 
-### What it is
+---
+
+## What is it?
 
 Dynamic AI is an experimental neural network model inspired by fractal structures in the universe and the human brain. It incorporates recursive nodes (FractalNodes) to dynamically grow and learn through Hebbian-like updates and pruning. The model also integrates a VAE (Variational Autoencoder) for encoding latent space representations. This repository contains the code for training, chatting, and interacting with the model via a Gradio interface.
 
-# Attention Mechanism (New)
+---
 
-The attention mechanism dynamically adjusts the focus of the model by assigning importance to different child nodes in the fractal structure. Each child node receives an attention score based on its relevance, which is calculated using a softmax function. This allows the model to prioritize certain nodes over others during the forward pass, enabling more efficient learning and processing. Additionally, the model maintains a co-activation matrix that tracks how frequently different nodes are activated together, which further refines the attention scores. This approach enhances the model’s adaptability and helps manage complex hierarchical interactions.
+## Attention Mechanism (New)
 
+The attention mechanism dynamically adjusts the focus of the model by assigning importance to different child nodes in the fractal structure. Each child node receives an attention score based on its relevance, calculated using a softmax function. This allows the model to prioritize certain nodes during the forward pass, enabling more efficient learning and processing. The model also maintains a co-activation matrix that tracks how frequently different nodes activate together, further refining the attention scores.
+
+---
 
 ## Features
 
-- **Recursive Fractal Nodes**: Nodes can grow and create child nodes based on the complexity of their output, simulating the recursive, fractal-like nature of the brain and the universe.
+- **Recursive Fractal Nodes**: Nodes grow and create child nodes based on complexity, simulating the recursive, fractal-like nature of the brain and the universe.
 - **Variational Autoencoder (VAE)**: Encodes latent representations of inputs.
-- **Layer Normalization and Xavier Initialization**: Enhances training stability.
+- **Layer Normalization & Xavier Initialization**: Enhances training stability.
 - **Dynamic Complexity-based Growth**: Nodes grow based on complexity thresholds and manage child connections.
 - **Dynamic AI Chat**: Users can interact with the model to generate responses.
 - **LM Studio Integration**: Chat with a local LM Studio instance in a collaborative conversational framework.
 - **Gradio Interface**: A user-friendly interface to interact with the AI model, train it on Q&A pairs, and simulate conversations with LM Studio.
 
-## What it is?
+---
 
-Think Fractal ball around big bang with chocolate wafer inspired super weights that add complexity to normal weights. 
+## Technical Details
 
-Now with added attention mechanism. I just asked Claude to think of the node 1 as a sort of phone book that keeps tabs 
-of the child nodes and can hooke em up if they fire together. So they can.. Wire together. Tsk Tsk. You know what I mean. 
+Think of a fractal ball around the Big Bang, with chocolate wafer-inspired superweights that add complexity to normal weights. Now with an added attention mechanism, I asked Claude to think of node 1 as a sort of phone book that keeps tabs on child nodes and "hooks them up" if they fire together. So, they can wire together. You know what I mean.
 
-The depth setting can make the ball complexities explode to Nan territory real fast and there was a real fight to keep the 
-complexity setting at bay. 
-  
+The depth setting can cause the ball complexities to explode to NaN (out of range) territory very fast. There was a real fight to keep the complexity setting manageable.
+
+---
+
 ## Requirements
+
 - Python 3.8+
 - PyTorch
 - Gradio
 - LM Studio (optional, for integration with the `talk_with_lm_studio` feature)
-- Etc
-The requirements.txt was written by ChatGPT. I have not tested if it would work as it is.
 
-## Problems?
+> **Note**: The `requirements.txt` was generated by ChatGPT, and I have not tested if it works as-is.
 
-Ask from Claude / ChatGPT. Paste them this and the code. They will understand what to do. NotebookLM 
-talking heads think this is groundbreaking. But since all I hear is crickets. I guess it aint. But it most 
-def has been a wild ride. 
+---
 
 ## Installation
 
@@ -84,6 +83,8 @@ def has been a wild ride.
    python app.py
    ```
 
+---
+
 ## Usage
 
 ### 1. Chat with Dynamic AI
@@ -91,33 +92,27 @@ def has been a wild ride.
 You can use the Gradio interface to chat with the Dynamic AI model.
 
 - **Message**: Enter your message and adjust the temperature for creativity.
-- **Response**: The AI will generate a response based on its learned knowledge.
+- **Response**: The AI will generate a response based on its knowledge.
 
 ### 2. Train the Model on Q&A Pairs
 
-You can train the model on a list of question-answer pairs using the Gradio interface.
+You can train the model using a JSON file containing question-answer pairs through the Gradio interface.
 
-- **Q&A Pairs File**: Upload a JSON file containing question-answer pairs.
+- **Q&A Pairs File**: Upload a JSON file with question-answer pairs.
 - **Epochs**: Set the number of training epochs.
-- **Training Output**: Monitor the progress of training, including loss metrics.
-- This can lead to the complexity being wildly off and the model begins to parrot the words in the
-- question answer pairs. 
+- **Training Output**: Monitor the training progress, including loss metrics.
+
+> **Note**: This can cause the model to parrot the words in the Q&A pairs if the complexity isn't managed properly.
 
 ### 3. LM Studio Conversation
 
-! You may have to wait a while for the conversation to start. I think perhaps there are 
-multiple empty interactions but eventually the model says something and lm studio grabs on to that. 
-If you teach the model with question answer pairs it sticks on to them and the complexity 
-does not stabilze. On the initial live training video I did at the beginning of this readme 
-something amazing happened. The complexity stabilized at 16 and did not budge. 
+You may have to wait for the conversation to start. There could be multiple empty interactions, but eventually, the model will say something, and LM Studio will respond. If you train the model with Q&A pairs, the complexity may not stabilize.
 
-You can simulate a collaborative conversation between Dynamic AI and LM Studio:
+On the initial live training video (linked at the top), something amazing happened: the complexity stabilized at 16 and didn’t budge.
 
 - **Initial Message**: Set the initial message to start the conversation.
-- **Duration**: Set the duration of the conversation.
+- **Duration**: Set the conversation's duration.
 - **Delay**: Set the delay between messages.
-
-This is a good start. The question answer pairs seem to produce more random AI. 
 
 ### 4. Save/Load Model State
 
@@ -125,6 +120,8 @@ You can save and load the state of the model using the Gradio interface.
 
 - **Save State**: Save the current model state to a file.
 - **Load State**: Load a previously saved state to restore the model.
+
+---
 
 ## Example
 
@@ -136,9 +133,11 @@ python app.py
 
 Then, access the Gradio interface from your browser. You can interact with the AI by typing messages, training it, or saving/loading its state.
 
-### Training Data Format
+---
 
-The Q&A pairs should be provided in a JSON file in the following format:
+## Training Data Format
+
+The Q&A pairs should be in a JSON file in the following format:
 
 ```json
 [
@@ -147,19 +146,26 @@ The Q&A pairs should be provided in a JSON file in the following format:
 ]
 ```
 
-### Contribution
+---
+
+## Contribution
 
 Feel free to contribute to this project by submitting pull requests or opening issues for improvements or bugs.
 
-### Issues
+---
 
-The depth settings are extremely important: 
+## Issues
 
-    dynamic_ai = DynamicAI(vocab_size=50000, embed_dim=256, latent_dim=256, output_dim=256, max_depth=7)
+The depth settings are critical:
 
-    As the deeper it gets, the deeper the "fractal ball" around point one "Think big bang" gets, the more 
-    complex it gets. You hit NAN (out of reach) complexity very fast and the thing wont work. 
+```python
+dynamic_ai = DynamicAI(vocab_size=50000, embed_dim=256, latent_dim=256, output_dim=256, max_depth=7)
+```
 
-### License
+The deeper the model gets, the more complex the "fractal ball" around the initial point (think Big Bang) becomes. If it gets too complex, you’ll hit NaN (out of reach) territory, and the model won’t work properly.
+
+---
+
+## License
 
 This project is licensed under the MIT License.

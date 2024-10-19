@@ -1,0 +1,9 @@
+torch==2.0.1
+gradio==3.4.1
+openai==0.27.0
+transformers==4.10.3
+numpy==1.24.2           # For tensor operations and numerical computations
+scipy==1.10.1           # If used in more advanced machine learning scenarios (e.g., `log` functions, etc.)
+protobuf==3.20.1        # To avoid compatibility issues with certain packages
+requests==2.28.1        # OpenAI's API might internally rely on this for HTTP requests
+jsonschema==4.10.0      # Ensuring JSON validation and handling

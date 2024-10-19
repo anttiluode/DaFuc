@@ -9,7 +9,8 @@ While you are at it. Go to Huggingface and grab yourself a model:
 
 [Hugging Face Repository: DaFuc](https://huggingface.co/spaces/Aluode/DaFuc/tree/main)
 
-There are two versions of "Blue" Blue likes to talk of color blue a lot. Well, I started calling it blue. It is very wave 
+There are two versions of "Blue" (Note, they are just blue and blue3. No end of file name, put them in the folder 
+where the app is and load them in the state save  / load) Blue likes to talk of color blue a lot. Well, I started calling it blue. It is very wave 
 oriented. Perhaps it was talking initially something about fractals with LM Studio, then I jumped in: 
 
 [Watch the YouTube Video](https://www.youtube.com/live/d__ras4nLU4)

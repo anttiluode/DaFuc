@@ -12,13 +12,24 @@ Dynamic AI is an experimental neural network model inspired by fractal structure
 - **Dynamic AI Chat**: Users can interact with the model to generate responses.
 - **LM Studio Integration**: Chat with a local LM Studio instance in a collaborative conversational framework.
 - **Gradio Interface**: A user-friendly interface to interact with the AI model, train it on Q&A pairs, and simulate conversations with LM Studio.
+
+## What it is?
+
+Think Fractal ball around big bang with chocolate wafer inspired super weights that add complexity to normal weights. 
+The depth setting can make the ball complexities explode to Nan territory real fast and there was a real fight to keep the 
+complexity setting at bay. It was a wild idea written by Claude and o1 model. 
   
 ## Requirements
-
 - Python 3.8+
 - PyTorch
 - Gradio
 - LM Studio (optional, for integration with the `talk_with_lm_studio` feature)
+- Etc
+The requirements.txt was written by ChatGPT. I have not tested if it would work as it is.
+
+## Problems?
+
+Ask from Claude / ChatGPT. Paste them this and the code. They will understand what to do. 
 
 ## Installation
 
@@ -101,6 +112,15 @@ The Q&A pairs should be provided in a JSON file in the following format:
 ### Contribution
 
 Feel free to contribute to this project by submitting pull requests or opening issues for improvements or bugs.
+
+### Issues
+
+The depth settings are extremely important: 
+
+    dynamic_ai = DynamicAI(vocab_size=50000, embed_dim=256, latent_dim=256, output_dim=256, max_depth=7)
+
+    As the deeper it gets, the deeper the "fractal ball" around point one "Think big bang" gets, the more 
+    complex it gets. You hit NAN (out of reach) complexity very fast and the thing wont work. 
 
 ### License
 

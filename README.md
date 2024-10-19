@@ -5,6 +5,19 @@
 
 Check out the demo of the project on YouTube: [Watch Here](https://www.youtube.com/live/d__ras4nLU4)
 
+While you are at it. Go to Huggingface and grab yourself a model: 
+
+[Hugging Face Repository: DaFuc](https://huggingface.co/spaces/Aluode/DaFuc/tree/main)
+
+There are two versions of "Blue" Blue likes to talk of color blue a lot. Well, I started calling it blue. It is very wave 
+oriented. Perhaps it was talking initially something about fractals with LM Studio, then I jumped in: 
+
+[Watch the YouTube Video](https://www.youtube.com/live/d__ras4nLU4)
+
+It could be that I am seeing something in it that ain't there. But there is something organic about it. For some reason 
+when I began talking Finnish, it did not stick to its vocabulary. 
+
+### What it is
 
 Dynamic AI is an experimental neural network model inspired by fractal structures in the universe and the human brain. It incorporates recursive nodes (FractalNodes) to dynamically grow and learn through Hebbian-like updates and pruning. The model also integrates a VAE (Variational Autoencoder) for encoding latent space representations. This repository contains the code for training, chatting, and interacting with the model via a Gradio interface.
 

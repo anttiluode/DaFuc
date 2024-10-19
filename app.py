@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import torch.nn.functional as F
 import random
 import json
 import logging
@@ -18,7 +19,7 @@ class VAE(nn.Module):
         self.encoder = nn.Sequential(
             nn.Linear(input_dim, 128),
             nn.ReLU(),
-            nn.Linear(128, latent_dim * 2)  # Latent space with both mean and log variance
+            nn.Linear(128, latent_dim * 2)
         )
         self.decoder = nn.Sequential(
             nn.Linear(latent_dim, 128),
@@ -44,27 +45,28 @@ class VAE(nn.Module):
         kld = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
         return recon_loss + kld
 
-# FractalNode class for FUCWM
+# FractalNode class for FUCWM with Attention
 class FractalNode(nn.Module):
-    def __init__(self, input_dim, output_dim, depth=0, max_depth=5):
+    def __init__(self, input_dim, output_dim, depth=0, max_depth=5, max_children=2):
         super().__init__()
         self.traditional_weight = nn.Linear(input_dim, output_dim)
-        nn.init.xavier_uniform_(self.traditional_weight.weight)  # Xavier initialization
+        nn.init.xavier_uniform_(self.traditional_weight.weight)
         self.superweight = nn.Parameter(torch.eye(output_dim))
-        self.norm = nn.LayerNorm(output_dim)  # Add Layer Normalization
+        self.norm = nn.LayerNorm(output_dim)
         self._children = []
         self.is_active = True
-        self.max_children = 2
+        self.max_children = max_children
         self.complexity_threshold = 0.5
         self.depth = depth
         self.max_depth = max_depth
+        self.attention_weights = nn.Parameter(torch.ones(max_children))
 
     def forward(self, x):
         if x.dim() == 1:
             x = x.unsqueeze(0)
 
         base_output = self.traditional_weight(x)
-        base_output = self.norm(base_output)  # Apply normalization
+        base_output = self.norm(base_output)
         complexity = self.calculate_complexity(base_output)
 
         if complexity > self.complexity_threshold and len(self._children) < self.max_children and self.depth < self.max_depth:
@@ -75,15 +77,15 @@ class FractalNode(nn.Module):
 
         modulated_output = torch.matmul(self.superweight, base_output.unsqueeze(-1)).squeeze(-1)
 
-        for child in self._children:
+        for i, child in enumerate(self._children):
             if child.is_active:
                 child_output = child(modulated_output)
-                modulated_output = modulated_output + child_output * self.calculate_relevance(child_output)
+                modulated_output = modulated_output + child_output * F.softmax(self.attention_weights, dim=0)[i]
 
         return modulated_output
 
     def calculate_complexity(self, output):
-        return torch.log(1 + torch.norm(output))  # Use log to stabilize
+        return torch.log(1 + torch.norm(output))
 
     def calculate_relevance(self, child_output):
         return torch.sigmoid(torch.sum(child_output * self.superweight))
@@ -104,6 +106,10 @@ class FractalNode(nn.Module):
         for child in self._children:
             child.grow(complexity_threshold)
 
+    def update_attention(self, co_activation_vector):
+        self.attention_weights.data += co_activation_vector[:len(self._children)]
+        self.attention_weights.data = F.softmax(self.attention_weights, dim=0)
+
     @property
     def complexity(self):
         return torch.norm(self.superweight)
@@ -111,26 +117,27 @@ class FractalNode(nn.Module):
     @property
     def children(self):
         return self._children
-    
-# FUCWM class
+
+# FUCWM class with Attention
 class FUCWM(nn.Module):
     def __init__(self, vocab_size, embed_dim, output_dim, max_depth=5):
         super().__init__()
         self.word_embeddings = nn.Embedding(vocab_size, embed_dim)
         self.root = FractalNode(embed_dim, output_dim, max_depth=max_depth)
         self.max_depth = max_depth
+        self.co_activation_matrix = torch.zeros((max_depth, max_depth))
 
     def forward(self, x):
         if x.dtype == torch.long:
-            # If input is token indices, use embedding layer
             embedded = self.word_embeddings(x)
             if embedded.dim() == 3:
                 embedded = embedded.mean(dim=1)
         else:
-            # If input is already a latent vector, use it directly
             embedded = x
         
-        return self.root(embedded)
+        output = self.root(embedded)
+        self.update_co_activations()
+        return output
 
     def grow(self, complexity_threshold):
         self.root.grow(complexity_threshold)
@@ -151,6 +158,22 @@ class FUCWM(nn.Module):
             for child in node.children:
                 _manage_padding(child, depth + 1)
         _manage_padding(self.root, 0)
+
+    def update_co_activations(self):
+        for i in range(self.max_depth):
+            for j in range(self.max_depth):
+                if i != j:
+                    self.co_activation_matrix[i][j] += 0.1 * random.random()
+        
+        self.co_activation_matrix = F.softmax(self.co_activation_matrix, dim=1)
+
+    def update_attention_weights(self):
+        def update_node(node, depth):
+            node.update_attention(self.co_activation_matrix[depth])
+            for child in node.children:
+                update_node(child, depth+1)
+        
+        update_node(self.root, 0)
 
 class DynamicAI:
     def __init__(self, vocab_size=10000, embed_dim=64, latent_dim=64, output_dim=64, max_depth=5):
@@ -227,13 +250,11 @@ class DynamicAI:
         conversation_log = []
 
         while time.time() - start_time < conversation_duration:
-            # DynamicAI's turn
             ai_response = self.chat(message)
             logger.info(f"DynamicAI:\n{ai_response}")
             conversation_log.append(f"DynamicAI:\n{ai_response}")
-            yield "\n\n".join(conversation_log)  # Update the conversation log in real-time
+            yield "\n\n".join(conversation_log)
 
-            # Extract just the response text to send to LM Studio
             ai_message = ai_response.split("Response: ")[-1].strip()
 
             if not ai_message:
@@ -243,13 +264,12 @@ class DynamicAI:
                 time.sleep(delay)
                 continue
 
-            # LM Studio's turn
             lm_studio_response = self.send_to_lm_studio(ai_message)
             if lm_studio_response:
                 logger.info(f"LM Studio: {lm_studio_response}")
                 conversation_log.append(f"LM Studio: {lm_studio_response}")
                 message = lm_studio_response
-                yield "\n\n".join(conversation_log)  # Update the conversation log in real-time
+                yield "\n\n".join(conversation_log)
             else:
                 logger.warning("No response from LM Studio. Ending conversation.")
                 break
@@ -276,7 +296,6 @@ class DynamicAI:
             logger.error(f"Error sending to LM Studio: {str(e)}")
             return None
 
-
     def train_on_qa_pairs(self, qa_pairs, epochs=10):
         if not isinstance(qa_pairs, list) or len(qa_pairs) == 0:
             raise ValueError("qa_pairs must be a non-empty list")
@@ -293,31 +312,28 @@ class DynamicAI:
                     q_tokens = self.tokenize(question)
                     a_tokens = self.tokenize(answer)
                     
-                    # Process through embedding and VAE
                     q_embedded = self.model.word_embeddings(q_tokens)
                     _, _, _, q_latent = self.vae(q_embedded.mean(dim=1))
                     
                     a_embedded = self.model.word_embeddings(a_tokens)
                     _, _, _, a_latent = self.vae(a_embedded.mean(dim=1))
                     
-                    # Process through FUCWM
                     q_output = self.model(q_latent)
                     a_output = self.model(a_latent)
                     
                     loss = self.criterion(q_output, a_output)
                     loss.backward()
 
-                    # Gradient clipping
                     torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
-                    
+    
                     self.optimizer.step()
                     
                     total_loss += loss.item()
 
-                    # Grow and update the model structure
                     self.model.grow(complexity_threshold=0.5)
                     self.model.update_superweights(q_output.detach())
                     self.model.manage_padding()
+                    self.model.update_attention_weights()
 
                     if i % 10 == 0:
                         logger.info(f"Epoch {epoch+1}, Pair {i+1}/{len(qa_pairs)}, Loss: {loss.item():.4f}")
@@ -333,7 +349,6 @@ class DynamicAI:
             
             self.scheduler.step()
             
-            # Save model state after each epoch
             self.save_state(f"model_state_epoch_{epoch+1}.pth")
             
             yield epoch + 1, avg_loss, errors
@@ -357,10 +372,8 @@ class DynamicAI:
         self.index_to_word = state['index_to_word']
         self.next_index = state['next_index']
         
-        # Rebuild the model structure
         self.rebuild_model_structure(state['model_state'])
         
-        # Load the state dictionaries
         self.model.load_state_dict(state['model_state'])
         self.vae.load_state_dict(state['vae_state'])
         self.optimizer.load_state_dict(state['optimizer_state'])
@@ -390,7 +403,6 @@ class DynamicAI:
                 child_prefix = f"{prefix}child_{index}."
                 rebuild_node(node._children[index-1], child_prefix)
 
-        # Start rebuilding from the root
         rebuild_node(self.model.root, "root.")
 
     def grow(self, complexity_threshold):
@@ -421,8 +433,8 @@ def create_gradio_interface(ai):
                 qa_pairs = json.load(f)
             
             output = ["Starting training..."]
-            for epoch, loss in ai.train_on_qa_pairs(qa_pairs, epochs=int(epochs)):
-                output.append(f"Epoch {epoch}/{epochs}, Loss: {loss:.4f}")
+            for epoch, loss, errors in ai.train_on_qa_pairs(qa_pairs, epochs=int(epochs)):
+                output.append(f"Epoch {epoch}/{epochs}, Loss: {loss:.4f}, Errors: {errors}")
             output.append("Training completed successfully")
             return "\n".join(output)
         except Exception as e:
@@ -435,7 +447,7 @@ def create_gradio_interface(ai):
             yield conversation_log
 
     with gr.Blocks() as interface:
-        gr.Markdown("# Dynamic AI with Fractal Universe Chocolate Wafer Model")
+        gr.Markdown("# Dynamic AI with Fractal Universe Chocolate Wafer Model and Attention Mechanism")
 
         with gr.Tab("Chat"):
             chat_input = gr.Textbox(label="Your message")

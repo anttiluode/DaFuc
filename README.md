@@ -12,6 +12,11 @@ older version of LM Studio that works with any model name.
 
 Dynamic AI is an experimental neural network model inspired by fractal structures in the universe and the human brain. It incorporates recursive nodes (FractalNodes) to dynamically grow and learn through Hebbian-like updates and pruning. The model also integrates a VAE (Variational Autoencoder) for encoding latent space representations. This repository contains the code for training, chatting, and interacting with the model via a Gradio interface.
 
+# Attention Mechanism
+
+The attention mechanism dynamically adjusts the focus of the model by assigning importance to different child nodes in the fractal structure. Each child node receives an attention score based on its relevance, which is calculated using a softmax function. This allows the model to prioritize certain nodes over others during the forward pass, enabling more efficient learning and processing. Additionally, the model maintains a co-activation matrix that tracks how frequently different nodes are activated together, which further refines the attention scores. This approach enhances the model’s adaptability and helps manage complex hierarchical interactions.
+
+
 ## Features
 
 - **Recursive Fractal Nodes**: Nodes can grow and create child nodes based on the complexity of their output, simulating the recursive, fractal-like nature of the brain and the universe.

@@ -353,14 +353,45 @@ class DynamicAI:
 
     def load_state(self, filename):
         state = torch.load(filename)
+        self.word_to_index = state['word_to_index']
+        self.index_to_word = state['index_to_word']
+        self.next_index = state['next_index']
+        
+        # Rebuild the model structure
+        self.rebuild_model_structure(state['model_state'])
+        
+        # Load the state dictionaries
         self.model.load_state_dict(state['model_state'])
         self.vae.load_state_dict(state['vae_state'])
         self.optimizer.load_state_dict(state['optimizer_state'])
         self.scheduler.load_state_dict(state['scheduler_state'])
-        self.word_to_index = state['word_to_index']
-        self.index_to_word = state['index_to_word']
-        self.next_index = state['next_index']
+        
         logger.info(f"Model state loaded from {filename}")
+
+    def rebuild_model_structure(self, state_dict):
+        def rebuild_node(node, prefix):
+            child_indices = set()
+            for name in state_dict.keys():
+                if name.startswith(prefix):
+                    parts = name[len(prefix):].split('.')
+                    if parts[0].startswith('child_'):
+                        child_index = int(parts[0].split('_')[1])
+                        child_indices.add(child_index)
+            
+            for index in sorted(child_indices):
+                while len(node._children) < index:
+                    new_child = FractalNode(node.traditional_weight.out_features, 
+                                            node.traditional_weight.out_features, 
+                                            depth=node.depth+1, 
+                                            max_depth=node.max_depth)
+                    node._children.append(new_child)
+                    node.add_module(f'child_{len(node._children)}', new_child)
+                
+                child_prefix = f"{prefix}child_{index}."
+                rebuild_node(node._children[index-1], child_prefix)
+
+        # Start rebuilding from the root
+        rebuild_node(self.model.root, "root.")
 
     def grow(self, complexity_threshold):
         self.model.grow(complexity_threshold)

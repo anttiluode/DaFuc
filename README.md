@@ -21,7 +21,7 @@ Dynamic AI is an experimental neural network model inspired by fractal structure
 
 Think Fractal ball around big bang with chocolate wafer inspired super weights that add complexity to normal weights. 
 The depth setting can make the ball complexities explode to Nan territory real fast and there was a real fight to keep the 
-complexity setting at bay. It was a wild idea written by Claude and o1 model. 
+complexity setting at bay. It was a wild idea coded by Claude and o1 model. 
   
 ## Requirements
 - Python 3.8+

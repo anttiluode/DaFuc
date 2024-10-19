@@ -21,6 +21,10 @@ The attention mechanism dynamically adjusts the focus of the model by assigning 
 ## What it is?
 
 Think Fractal ball around big bang with chocolate wafer inspired super weights that add complexity to normal weights. 
+
+Now with added attention mechanism. I just asked Claude to think of the node 1 as a sort of phone book that keeps tabs 
+of the child nodes and can hooke em up if they fire together. So they can.. Wire together. Tsk Tsk. You know what I mean. 
+
 The depth setting can make the ball complexities explode to Nan territory real fast and there was a real fight to keep the 
 complexity setting at bay. It was a wild idea coded by Claude and o1 model. 
   

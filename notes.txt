@@ -1,0 +1,28 @@
+It is most interesting when you let LM studio talk to it from the start. 
+
+The depth settings (at the end of the code) can fast lead to explosive complexity growth. 
+
+"I" (Claude / ChatGPT) added a lot of things from actual AI's into it. Ie forward / backward pass, vae etc. Have fun.
+
+I do not really claim to understand it well. I had faint idea of fractals originating from big bang (Matter and galaxies are spread in fractal shape). 
+Or thoughts being processed in the brain and AI as fractals which has been the main stream idea since 1986.
+
+Interestingly most of the thinking is happening in the outer most layer as in "cortex". But perhaps that is natural as when you have a big lump
+of thinking nodes. Most of them are in the outer edge. 
+
+ The chocolate wafer model was a way to try to make normal ai model more dynamic, introducing a "super weight". Imagine wafer full of normal weights 
+and bunch of them constituting a super weight. That was somehow transferred to this code from a older code I did to try to make a normal AI dynamic.
+I was thinking, if it is impossible to change them all, how about we change clusters of them. 
+
+it was coded by Claude / ChatGPT, although it was like wrangling cats to make the dynamic ai to talk. The problem is that normal AI's deal with
+matrix multiplications etc that are known. In fractal, there is nothing that is known, it is growing ball of mathematics. We did scalars etc. 
+Tried to originate the fractals from the "big bang" and do forward and backward passes between the big bang and the outer layers. I do not 
+claim to understand what it is that was coded in yet myself either. 
+
+It was end result of a weird week.
+
+Most of the problems came from trying to keep the complexities at bay. We had it grow in complexity to Nan very fast at some settings. 
+
+LM Studio chat with it makes it seem almost like it makes sense. Teaching the json question answer pairs it is answering in jumbled mess. 
+
+When you talk to it for the first time. It is like big bang. The first fractal appears.. :D 

@@ -1,6 +1,10 @@
 
 # Dynamic AI: Fractal Universe Chocolate Wafer Model (FUCWM)
 
+LM Studio - Fractall Ball chat currently live: 
+
+[Watch the YouTube Live Video](https://www.youtube.com/live/LlnCpfqgqjU)
+
 Dynamic AI is an experimental neural network model inspired by fractal structures in the universe and the human brain. It incorporates recursive nodes (FractalNodes) to dynamically grow and learn through Hebbian-like updates and pruning. The model also integrates a VAE (Variational Autoencoder) for encoding latent space representations. This repository contains the code for training, chatting, and interacting with the model via a Gradio interface.
 
 ## Features

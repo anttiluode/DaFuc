@@ -97,7 +97,7 @@ You can save and load the state of the model using the Gradio interface.
 To chat with Dynamic AI using the command line interface:
 
 ```bash
-python dynamic_ai.py
+python app.py
 ```
 
 Then, access the Gradio interface from your browser. You can interact with the AI by typing messages, training it, or saving/loading its state.

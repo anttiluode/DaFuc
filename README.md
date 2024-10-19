@@ -5,6 +5,8 @@ LM Studio - Fractall Ball chat currently live:
 
 [Watch the YouTube Live Video](https://www.youtube.com/live/LlnCpfqgqjU)
 
+Here something amazing happened. The comlexity got stuck in 16! 
+
 Dynamic AI is an experimental neural network model inspired by fractal structures in the universe and the human brain. It incorporates recursive nodes (FractalNodes) to dynamically grow and learn through Hebbian-like updates and pruning. The model also integrates a VAE (Variational Autoencoder) for encoding latent space representations. This repository contains the code for training, chatting, and interacting with the model via a Gradio interface.
 
 ## Features
@@ -74,8 +76,16 @@ You can train the model on a list of question-answer pairs using the Gradio inte
 - **Q&A Pairs File**: Upload a JSON file containing question-answer pairs.
 - **Epochs**: Set the number of training epochs.
 - **Training Output**: Monitor the progress of training, including loss metrics.
+- This can lead to the complexity being wildly off and the model begins to parrot the words in the
+- question answer pairs. 
 
 ### 3. LM Studio Conversation
+
+! You may have to wait a while for the conversation to start. I think perhaps there are 
+multiple empty interactions but eventually the model says something and lm studio grabs on to that. 
+If you teach the model with question answer pairs it sticks on to them and the complexity 
+does not stabilze. On the initial live training video I did at the beginning of this readme 
+something amazing happened. The complexity stabilized at 16 and did not budge. 
 
 You can simulate a collaborative conversation between Dynamic AI and LM Studio:
 

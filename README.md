@@ -1,6 +1,11 @@
 
 # Dynamic AI: Fractal Universe Chocolate Wafer Model (FUCWM) 
 
+### Watch Demo
+
+Check out the demo of the project on YouTube: [Watch Here](https://www.youtube.com/live/d__ras4nLU4)
+
+
 Dynamic AI is an experimental neural network model inspired by fractal structures in the universe and the human brain. It incorporates recursive nodes (FractalNodes) to dynamically grow and learn through Hebbian-like updates and pruning. The model also integrates a VAE (Variational Autoencoder) for encoding latent space representations. This repository contains the code for training, chatting, and interacting with the model via a Gradio interface.
 
 # Attention Mechanism (New)
@@ -26,7 +31,7 @@ Now with added attention mechanism. I just asked Claude to think of the node 1 a
 of the child nodes and can hooke em up if they fire together. So they can.. Wire together. Tsk Tsk. You know what I mean. 
 
 The depth setting can make the ball complexities explode to Nan territory real fast and there was a real fight to keep the 
-complexity setting at bay. It was a wild idea coded by Claude and o1 model. 
+complexity setting at bay. 
   
 ## Requirements
 - Python 3.8+
@@ -38,7 +43,9 @@ The requirements.txt was written by ChatGPT. I have not tested if it would work 
 
 ## Problems?
 
-Ask from Claude / ChatGPT. Paste them this and the code. They will understand what to do. 
+Ask from Claude / ChatGPT. Paste them this and the code. They will understand what to do. NotebookLM 
+talking heads think this is groundbreaking. But since all I hear is crickets. I guess it aint. But it most 
+def has been a wild ride. 
 
 ## Installation
 
